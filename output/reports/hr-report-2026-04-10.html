@@ -67,7 +67,7 @@
   .pie-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4a5568; margin-bottom: 7px; }
   .pie-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
 
-  @media (max-width: 640px) { .trend-columns { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .trend-columns { grid-template-columns: 1fr; } /* 아래 통합 쿼리에서 재정의 */ }
 
   /* 뉴스 카드 */
   .news-card { border: 1px solid #fed7aa; border-radius: 10px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
@@ -84,9 +84,45 @@
   .footer { text-align: center; padding: 20px; color: #a0aec0; font-size: 12px; }
 
   @media (max-width: 640px) {
+    /* 컨테이너 */
+    .container { padding: 10px; }
+
+    /* 헤더 */
+    .report-header { padding: 24px 16px; border-radius: 12px; }
+    .report-header h1 { font-size: 20px; }
+    .report-header .subtitle { font-size: 13px; }
+    .stat-row { gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+    .stat-num { font-size: 22px; }
+    .stat-label { font-size: 11px; }
+
+    /* 섹션 */
+    .section { padding: 18px 14px; border-radius: 10px; }
+    .section-title { font-size: 15px; }
+    .section-desc { font-size: 12px; }
+
+    /* 트렌드 */
+    .trend-columns { grid-template-columns: 1fr; gap: 24px; }
+    .trend-right { flex-direction: column; align-items: center; min-height: auto; gap: 12px; }
+    .trend-label { width: 64px; font-size: 12px; }
+    .trend-count { font-size: 11px; }
+    #pie-legend { flex-direction: row; flex-wrap: wrap; justify-content: center; height: auto; }
+    .pie-legend-item { margin-bottom: 4px; margin-right: 6px; font-size: 11px; }
+
+    /* 영상 그리드 */
     .video-grid { grid-template-columns: 1fr; }
-    .video-col-headers { grid-template-columns: 1fr; }
-    .stat-row { gap: 20px; }
+    .video-col-headers { grid-template-columns: 1fr 1fr; }
+    .video-stats { gap: 4px; font-size: 10px; }
+    .video-title { font-size: 12px; }
+    .video-channel { font-size: 10px; }
+
+    /* 뉴스 */
+    .news-meta { flex-wrap: wrap; gap: 4px; }
+    .news-date { margin-left: 0; }
+    .news-title { font-size: 14px; }
+    .news-summary { font-size: 12px; }
+
+    /* 키워드 태그 */
+    .kw-tag { font-size: 11px; padding: 4px 8px; margin: 3px; }
   }
 </style>
 </head>
@@ -481,7 +517,7 @@
   </div>
 
   <div class="footer">
-    자동 생성: 2026-04-10 23:47 | HR 인사노무 트렌드 리포트
+    자동 생성: 2026-04-10 23:59 | HR 인사노무 트렌드 리포트
   </div>
 
 </div>
