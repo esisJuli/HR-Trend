@@ -1,0 +1,17 @@
+# 환경 변수
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 출력 데이터 (선택적으로 추적 제외)
+# output/
+
+# OS
+.DS_Store
+Thumbs.db
