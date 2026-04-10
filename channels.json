@@ -1,0 +1,29 @@
+{
+  "channels": [
+    {
+      "id": "UCuBPFSqA1sOF2iw2UdMTCNQ",
+      "name": "고용노동부",
+      "description": "고용노동부 공식 유튜브 채널"
+    },
+    {
+      "id": "UC6So_eJJLk7aMoZq5rPgkOA",
+      "name": "노무법인 길",
+      "description": "노무사 실무 정보 채널"
+    },
+    {
+      "id": "UCQ4-QfMm3p6oZ6Csp3GKZMQ",
+      "name": "직장인 노무 상식",
+      "description": "직장인을 위한 노동법 상식"
+    },
+    {
+      "id": "UCvuS3J5yFdRnKFZVLGkMvEg",
+      "name": "HR인사이트",
+      "description": "HR 트렌드 및 인사관리 정보"
+    },
+    {
+      "id": "UCTe7PBaGzIqtCRGPXCEDGSw",
+      "name": "노무사 유튜브",
+      "description": "노동법 및 노무 실무 정보"
+    }
+  ]
+}
