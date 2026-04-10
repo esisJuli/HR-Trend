@@ -1,5 +1,6 @@
 {
   "channels": [],
+  "excluded_channel_keywords": ["MBC", "JTBC"],
   "channel_name_keywords": [
     "KBS", "MBC", "SBS", "YTN", "채널A", "TV조선", "MBN", "연합뉴스", "뉴스1",
     "고용노동부", "노동부",

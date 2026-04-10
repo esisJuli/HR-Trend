@@ -37,7 +37,8 @@ def load_media_filter():
     data = json.loads(MEDIA_CHANNELS_FILE.read_text(encoding="utf-8"))
     channel_ids = {ch["id"] for ch in data["channels"]}
     name_keywords = data["channel_name_keywords"]
-    return channel_ids, name_keywords
+    excluded_keywords = data.get("excluded_channel_keywords", [])
+    return channel_ids, name_keywords, excluded_keywords
 
 
 def is_media_channel(channel_id: str, channel_name: str, media_ids: set, name_keywords: list) -> bool:
@@ -45,6 +46,11 @@ def is_media_channel(channel_id: str, channel_name: str, media_ids: set, name_ke
     if channel_id in media_ids:
         return True
     return any(kw.lower() in channel_name.lower() for kw in name_keywords)
+
+
+def is_excluded_channel(channel_name: str, excluded_keywords: list) -> bool:
+    """제외 채널명인지 판별"""
+    return any(kw.lower() in channel_name.lower() for kw in excluded_keywords)
 
 # HR 검색 키워드
 HR_KEYWORDS = [
@@ -89,7 +95,7 @@ def collect_youtube_data() -> dict:
     youtube = get_youtube_client()
     since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
     all_videos = {}
-    media_ids, name_keywords = load_media_filter()
+    media_ids, name_keywords, excluded_keywords = load_media_filter()
 
     for keyword in HR_KEYWORDS:
         log.info(f"유튜브 검색 중: '{keyword}'")
@@ -125,6 +131,11 @@ def collect_youtube_data() -> dict:
                 # 언론사/뉴스 채널 아니면 제외
                 if not is_media_channel(channel_id, channel_name, media_ids, name_keywords):
                     log.info(f"    제외 (비언론사): {channel_name} — {item['snippet']['title'][:30]}")
+                    continue
+
+                # 제외 채널 필터
+                if is_excluded_channel(channel_name, excluded_keywords):
+                    log.info(f"    제외 (제외채널): {channel_name} — {item['snippet']['title'][:30]}")
                     continue
 
                 stats = item.get("statistics", {})
