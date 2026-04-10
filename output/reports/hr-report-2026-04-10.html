@@ -27,11 +27,15 @@
   .section-title { font-size: 18px; font-weight: 700; color: #7b2d00; margin-bottom: 6px; padding-bottom: 12px; border-bottom: 2px solid #fed7aa; }
   .section-desc { font-size: 13px; color: #718096; margin-bottom: 16px; }
 
-  /* 영상 그리드 */
-  .video-col-headers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .video-col-title { font-size: 14px; font-weight: 700; color: #c05621; padding: 6px 12px; background: #fff7ed; border-radius: 8px; text-align: center; border: 1px solid #fed7aa; }
-  .video-col-title.shorts { color: #7b2d00; background: #fef3c7; border-color: #fde68a; }
-  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* 탭 */
+  .tab-buttons { display: flex; border-radius: 10px; overflow: hidden; border: 1px solid #fed7aa; margin-bottom: 16px; }
+  .tab-btn { flex: 1; padding: 10px 0; font-size: 14px; font-weight: 700; border: none; cursor: pointer; background: #fff7ed; color: #c05621; transition: background 0.2s, color 0.2s; font-family: inherit; }
+  .tab-btn + .tab-btn { border-left: 1px solid #fed7aa; }
+  .tab-btn.active { background: #dd6b20; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .tab-content .video-card { margin-bottom: 12px; }
+  .tab-content .video-card:last-child { margin-bottom: 0; }
 
   /* 영상 카드 */
   .video-card { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid #fed7aa; border-radius: 10px; }
@@ -108,9 +112,8 @@
     #pie-legend { flex-direction: row; flex-wrap: wrap; justify-content: center; height: auto; }
     .pie-legend-item { margin-bottom: 4px; margin-right: 6px; font-size: 11px; }
 
-    /* 영상 그리드 */
-    .video-grid { grid-template-columns: 1fr; }
-    .video-col-headers { grid-template-columns: 1fr 1fr; }
+    /* 영상 탭 */
+    .tab-btn { font-size: 13px; padding: 9px 0; }
     .video-stats { gap: 4px; font-size: 10px; }
     .video-title { font-size: 12px; }
     .video-channel { font-size: 10px; }
@@ -253,12 +256,12 @@
   <div class="section">
     <div class="section-title"><svg style="width:22px;height:22px;vertical-align:middle;margin-right:6px;margin-bottom:2px;" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.55 3.5 12 3.5 12 3.5s-7.55 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.45 20.5 12 20.5 12 20.5s7.55 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>이번주 HR 유튜브 영상 TOP 5</div>
     <div class="section-desc">유튜브 영상 기준 - 조회수 및 좋아요 트렌드 분석</div>
-    <div class="video-col-headers">
-      <div class="video-col-title">📹 일반</div>
-      <div class="video-col-title shorts">⚡ 쇼츠</div>
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab-regular')">📹 일반</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-shorts')">⚡ 쇼츠</button>
     </div>
-    <div class="video-grid">
-      <div class="video-card">
+    <div class="tab-content active" id="tab-regular">
+<div class="video-card">
           <div class="video-rank top1">1</div>
           <div class="video-info">
             <div class="video-channel">KBS News</div>
@@ -272,19 +275,6 @@
           </div>
         </div>
 <div class="video-card">
-          <div class="video-rank top1">1</div>
-          <div class="video-info">
-            <div class="video-channel">JTBC News</div>
-            <div class="video-title"><a href="https://www.youtube.com/watch?v=nBi5dbL6Kas" target="_blank">이재명 대통령 "비정규직 2년 제한하자 '2년 이하 고용' 강제… 실용적 노동 개혁 필요"｜지금 이 쇼츠</a></div>
-            <div class="video-stats">
-              <span>👁 11,935</span>
-              <span>👍 102</span>
-              <span>⏱ 56초</span>
-              <span>📅 2026-04-09</span>
-            </div>
-          </div>
-        </div>
-<div class="video-card">
           <div class="video-rank top2">2</div>
           <div class="video-info">
             <div class="video-channel">JTBC News</div>
@@ -294,6 +284,60 @@
               <span>👍 1,366</span>
               <span>⏱ 9분 24초</span>
               <span>📅 2026-04-08</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank top3">3</div>
+          <div class="video-info">
+            <div class="video-channel">JTV뉴스</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=sBdinRKUb5E" target="_blank">"다 합의해서 권고사직하잖아?"...빠삭한 대통령, 거침없이 돌직구</a></div>
+            <div class="video-stats">
+              <span>👁 43,396</span>
+              <span>👍 930</span>
+              <span>⏱ 14분 23초</span>
+              <span>📅 2026-04-09</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank ">4</div>
+          <div class="video-info">
+            <div class="video-channel">뉴스TVCHOSUN</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=je5MJMZpZ50" target="_blank">[세가지 뉴스] 실업급여의 하한액이 최저임금 실 수령액을 돌파했다!! 일하면 194만원 쉬면 198만원 받나?!</a></div>
+            <div class="video-stats">
+              <span>👁 38,091</span>
+              <span>👍 618</span>
+              <span>⏱ 1분 16초</span>
+              <span>📅 2026-04-08</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank ">5</div>
+          <div class="video-info">
+            <div class="video-channel">뉴스닷</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=hXrR_fBk1Sk" target="_blank">이재명,“비정규직 연봉, 정규직보다 높게… 자발적 실업도 수당 줘야”</a></div>
+            <div class="video-stats">
+              <span>👁 17,917</span>
+              <span>👍 1,287</span>
+              <span>⏱ 6분 31초</span>
+              <span>📅 2026-04-09</span>
+            </div>
+          </div>
+        </div>
+</div>
+<div class="tab-content" id="tab-shorts">
+<div class="video-card">
+          <div class="video-rank top1">1</div>
+          <div class="video-info">
+            <div class="video-channel">JTBC News</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=nBi5dbL6Kas" target="_blank">이재명 대통령 "비정규직 2년 제한하자 '2년 이하 고용' 강제… 실용적 노동 개혁 필요"｜지금 이 쇼츠</a></div>
+            <div class="video-stats">
+              <span>👁 11,935</span>
+              <span>👍 102</span>
+              <span>⏱ 56초</span>
+              <span>📅 2026-04-09</span>
             </div>
           </div>
         </div>
@@ -313,38 +357,12 @@
 <div class="video-card">
           <div class="video-rank top3">3</div>
           <div class="video-info">
-            <div class="video-channel">JTV뉴스</div>
-            <div class="video-title"><a href="https://www.youtube.com/watch?v=sBdinRKUb5E" target="_blank">"다 합의해서 권고사직하잖아?"...빠삭한 대통령, 거침없이 돌직구</a></div>
-            <div class="video-stats">
-              <span>👁 43,396</span>
-              <span>👍 930</span>
-              <span>⏱ 14분 23초</span>
-              <span>📅 2026-04-09</span>
-            </div>
-          </div>
-        </div>
-<div class="video-card">
-          <div class="video-rank top3">3</div>
-          <div class="video-info">
             <div class="video-channel">SBS 뉴스</div>
             <div class="video-title"><a href="https://www.youtube.com/watch?v=cs0r0wnZv3o" target="_blank">"날이 좋아서 1시간 연차^^"..근로기준법 바뀐다 #shorts</a></div>
             <div class="video-stats">
               <span>👁 5,534</span>
               <span>👍 22</span>
               <span>⏱ 40초</span>
-              <span>📅 2026-04-08</span>
-            </div>
-          </div>
-        </div>
-<div class="video-card">
-          <div class="video-rank ">4</div>
-          <div class="video-info">
-            <div class="video-channel">뉴스TVCHOSUN</div>
-            <div class="video-title"><a href="https://www.youtube.com/watch?v=je5MJMZpZ50" target="_blank">[세가지 뉴스] 실업급여의 하한액이 최저임금 실 수령액을 돌파했다!! 일하면 194만원 쉬면 198만원 받나?!</a></div>
-            <div class="video-stats">
-              <span>👁 38,091</span>
-              <span>👍 618</span>
-              <span>⏱ 1분 16초</span>
               <span>📅 2026-04-08</span>
             </div>
           </div>
@@ -365,19 +383,6 @@
 <div class="video-card">
           <div class="video-rank ">5</div>
           <div class="video-info">
-            <div class="video-channel">뉴스닷</div>
-            <div class="video-title"><a href="https://www.youtube.com/watch?v=hXrR_fBk1Sk" target="_blank">이재명,“비정규직 연봉, 정규직보다 높게… 자발적 실업도 수당 줘야”</a></div>
-            <div class="video-stats">
-              <span>👁 17,917</span>
-              <span>👍 1,287</span>
-              <span>⏱ 6분 31초</span>
-              <span>📅 2026-04-09</span>
-            </div>
-          </div>
-        </div>
-<div class="video-card">
-          <div class="video-rank ">5</div>
-          <div class="video-info">
             <div class="video-channel">포항MBC NEWS</div>
             <div class="video-title"><a href="https://www.youtube.com/watch?v=Bhxkc8x5yCA" target="_blank">유가 폭등에 어선원 보험료 납부기한 3개월 연장 #shorts (포항MBC뉴스)</a></div>
             <div class="video-stats">
@@ -388,12 +393,12 @@
             </div>
           </div>
         </div>
-    </div>
+</div>
   </div>
 
   <!-- 주요 뉴스 -->
   <div class="section">
-    <div class="section-title">📰 이번주 HR 주요 뉴스 (최대 10건)</div>
+    <div class="section-title">📰 이번주 HR 주요 뉴스</div>
     
         <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=233737" target="_blank" style="text-decoration:none; color:inherit; display:block;">
           <div class="news-card">
@@ -517,7 +522,7 @@
   </div>
 
   <div class="footer">
-    자동 생성: 2026-04-10 23:59 | HR 인사노무 트렌드 리포트
+    자동 생성: 2026-04-11 00:06 | HR 인사노무 트렌드 리포트
   </div>
 
 </div>
@@ -572,6 +577,13 @@
     item.innerHTML = `<div class="pie-legend-dot" style="background:${colors[i]}"></div><span>${label} ${pct}%</span>`;
     legend.appendChild(item);
   });
+
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
 </script>
 </body>
 </html>
