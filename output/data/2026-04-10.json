@@ -1,9 +1,175 @@
 {
-  "collected_at": "2026-04-10T14:25:05.934481",
+  "collected_at": "2026-04-10T23:46:51.400938",
   "report_date": "2026-04-10",
-  "youtube_regular": [],
-  "youtube_shorts": [],
+  "youtube_regular": [
+    {
+      "id": "DXzcNW-OV9Q",
+      "title": "산재 신청했더니 “해고합니다”…노동청 신고하자 “고발할거야” / KBS  2026.04.06.",
+      "channel_name": "KBS News",
+      "published_at": "2026-04-07T02:35:01Z",
+      "url": "https://www.youtube.com/watch?v=DXzcNW-OV9Q",
+      "view_count": 268161,
+      "like_count": 1642,
+      "comment_count": 1173,
+      "duration_sec": 137,
+      "is_shorts": false,
+      "search_keyword": "해고",
+      "score": 284581
+    },
+    {
+      "id": "PZ6A32zsFGg",
+      "title": "\"퇴직금 들어가도 됩니까\"..미친 실적에 '목표가' 뚫렸다 #뉴스다 / JTBC News",
+      "channel_name": "JTBC News",
+      "published_at": "2026-04-08T03:57:59Z",
+      "url": "https://www.youtube.com/watch?v=PZ6A32zsFGg",
+      "view_count": 164969,
+      "like_count": 1366,
+      "comment_count": 304,
+      "duration_sec": 564,
+      "is_shorts": false,
+      "search_keyword": "퇴직금",
+      "score": 178629
+    },
+    {
+      "id": "sBdinRKUb5E",
+      "title": "\"다 합의해서 권고사직하잖아?\"...빠삭한 대통령, 거침없이 돌직구",
+      "channel_name": "JTV뉴스",
+      "published_at": "2026-04-09T02:38:38Z",
+      "url": "https://www.youtube.com/watch?v=sBdinRKUb5E",
+      "view_count": 43396,
+      "like_count": 930,
+      "comment_count": 180,
+      "duration_sec": 863,
+      "is_shorts": false,
+      "search_keyword": "권고사직",
+      "score": 52696
+    },
+    {
+      "id": "je5MJMZpZ50",
+      "title": "[세가지 뉴스] 실업급여의 하한액이 최저임금 실 수령액을 돌파했다!! 일하면 194만원 쉬면 198만원 받나?!",
+      "channel_name": "뉴스TVCHOSUN",
+      "published_at": "2026-04-08T03:04:25Z",
+      "url": "https://www.youtube.com/watch?v=je5MJMZpZ50",
+      "view_count": 38091,
+      "like_count": 618,
+      "comment_count": 479,
+      "duration_sec": 76,
+      "is_shorts": false,
+      "search_keyword": "최저임금",
+      "score": 44271
+    },
+    {
+      "id": "hXrR_fBk1Sk",
+      "title": "이재명,“비정규직 연봉, 정규직보다 높게… 자발적 실업도 수당 줘야”",
+      "channel_name": "뉴스닷",
+      "published_at": "2026-04-09T07:07:20Z",
+      "url": "https://www.youtube.com/watch?v=hXrR_fBk1Sk",
+      "view_count": 17917,
+      "like_count": 1287,
+      "comment_count": 591,
+      "duration_sec": 391,
+      "is_shorts": false,
+      "search_keyword": "비정규직",
+      "score": 30787
+    }
+  ],
+  "youtube_shorts": [
+    {
+      "id": "nBi5dbL6Kas",
+      "title": "이재명 대통령 \"비정규직 2년 제한하자 '2년 이하 고용' 강제… 실용적 노동 개혁 필요\"｜지금 이 쇼츠",
+      "channel_name": "JTBC News",
+      "published_at": "2026-04-09T08:20:02Z",
+      "url": "https://www.youtube.com/watch?v=nBi5dbL6Kas",
+      "view_count": 11935,
+      "like_count": 102,
+      "comment_count": 149,
+      "duration_sec": 56,
+      "is_shorts": true,
+      "search_keyword": "비정규직",
+      "score": 12955
+    },
+    {
+      "id": "1DMfmwHpo4w",
+      "title": "노동절, 63년 만에 '공휴일' 지정‥전국민 휴일 (2026.04.06/뉴스외전/MBC)",
+      "channel_name": "MBCNEWS",
+      "published_at": "2026-04-06T06:46:13Z",
+      "url": "https://www.youtube.com/watch?v=1DMfmwHpo4w",
+      "view_count": 5952,
+      "like_count": 64,
+      "comment_count": 75,
+      "duration_sec": 36,
+      "is_shorts": true,
+      "search_keyword": "근로기준법",
+      "score": 6592
+    },
+    {
+      "id": "cs0r0wnZv3o",
+      "title": "\"날이 좋아서 1시간 연차^^\"..근로기준법 바뀐다 #shorts",
+      "channel_name": "SBS 뉴스",
+      "published_at": "2026-04-08T06:16:56Z",
+      "url": "https://www.youtube.com/watch?v=cs0r0wnZv3o",
+      "view_count": 5534,
+      "like_count": 22,
+      "comment_count": 17,
+      "duration_sec": 40,
+      "is_shorts": true,
+      "search_keyword": "근로기준법",
+      "score": 5754
+    },
+    {
+      "id": "5riubma8Yh4",
+      "title": "노동부, '포괄임금 오남용 방지' 지침 오늘 시행 / 연합뉴스TV (YonhapnewsTV)",
+      "channel_name": "연합뉴스TV",
+      "published_at": "2026-04-08T21:38:36Z",
+      "url": "https://www.youtube.com/watch?v=5riubma8Yh4",
+      "view_count": 2402,
+      "like_count": 20,
+      "comment_count": 7,
+      "duration_sec": 49,
+      "is_shorts": true,
+      "search_keyword": "근로기준법",
+      "score": 2602
+    },
+    {
+      "id": "Bhxkc8x5yCA",
+      "title": "유가 폭등에 어선원 보험료 납부기한 3개월 연장 #shorts (포항MBC뉴스)",
+      "channel_name": "포항MBC NEWS",
+      "published_at": "2026-04-07T08:28:52Z",
+      "url": "https://www.youtube.com/watch?v=Bhxkc8x5yCA",
+      "view_count": 1660,
+      "like_count": 7,
+      "comment_count": 0,
+      "duration_sec": 36,
+      "is_shorts": true,
+      "search_keyword": "산재보험",
+      "score": 1730
+    }
+  ],
   "news_data": [
+    {
+      "title": "용인 반도체 건설 현장 집단해고 &quot;원청 SK가 책임져라&quot;",
+      "url": "https://www.labortoday.co.kr/news/articleView.html?idxno=233737",
+      "summary": "해고된 장동백씨는 &quot;퇴직금을 안 주기 위한 꼼수 탓에 10개월을 일하면 퇴사해야 다시 현장에서 일할 수 있었고, 이것이 부당하다고 생각해 노조에 가입했다&quot;며 &quot;그런데 노조를 탈퇴하면 일을 시켜주겠다며 조합원을... ",
+      "published_at": "2026-04-10T08:18:00+00:00",
+      "source": "매일노동뉴스",
+      "category": "퇴직금"
+    },
+    {
+      "title": "경영상 결정과 단체교섭의무에 관한 비교법적 고찰 (Ⅳ)",
+      "url": "http://www.worklaw.co.kr/view/view.asp?accessSite=Naver&accessMethod=Search&accessMenu=News&in_cate=125&in_cate2=0&gopage=1&bi_pidx=39042",
+      "summary": "엄격하게 보면 위 조항은 단체교섭의 대상이 아니라 '노동쟁의'의 개념에 관한 정의조항이므로, 이러한 법... 즉, 그러한 근로조건의 변경은 근로기준법상 해고제한, 취업규칙의 불이익변경, 민법상 신의칙 및 권리남용의... ",
+      "published_at": "2026-04-10T07:42:00+00:00",
+      "source": "노동법률",
+      "category": "근로기준법"
+    },
+    {
+      "title": "[판결] &quot;새마을금고 중앙회장의 징계권, 지역 금고 임직원에 직접 행사...",
+      "url": "https://www.lawtimes.co.kr/news/articleView.html?idxno=219193",
+      "summary": "대법원 민사2부(주심 천대엽 대법관)는 2월 26일 A 씨가 B 금고를 상대로 낸 해고무효 확인소송 상고심에서... -근로자에 대한 징계면직(해고)은 신분을 박탈하기에 형사처벌에 가까운 정도의 입증이 요구된다. 민사나... ",
+      "published_at": "2026-04-10T06:44:00+00:00",
+      "source": "법률신문",
+      "category": "해고"
+    },
     {
       "title": "민주노총 만난 이 대통령 &quot;사회적 대화로 유연안정성·AI 대응하자&quot;",
       "url": "https://www.labortoday.co.kr/news/articleView.html?idxno=233734",
@@ -59,77 +225,53 @@
       "published_at": "2026-04-09T22:04:00+00:00",
       "source": "매일노동뉴스",
       "category": "최저임금"
-    },
-    {
-      "title": "[단독] 정부, 기간제 사용기간 연장 '군불 때기'?",
-      "url": "https://www.labortoday.co.kr/news/articleView.html?idxno=233716",
-      "summary": "이명박 정부는 '100만 해고 대란설'을 내세우며 비정규직 고용제한 기간을 2년에서 4년으로 연장하는 내용의 법 개정안을 제출했다. 하지만 당시 실태조사 결과로 이러한 주장이 과장된 것으로 드러나면서 책임론이... ",
-      "published_at": "2026-04-09T22:04:00+00:00",
-      "source": "매일노동뉴스",
-      "category": "해고"
-    },
-    {
-      "title": "작업중지 요건 완화·산재 국선대리인제 본회의 '주목'",
-      "url": "https://www.labortoday.co.kr/news/articleView.html?idxno=233712",
-      "summary": "공인노무사가 이를 조력해 주는 산업재해보상보험법(산재보험법)이 통과될 수 있도록 최선을 다하겠다&quot;고 밝혔다. 민주당은 추경안을 처리하기 위해 예정된 10일 본회의에서 10개 내외의 시급한 민생법안을 통과시키자고... ",
-      "published_at": "2026-04-09T22:04:00+00:00",
-      "source": "매일노동뉴스",
-      "category": "노무사"
-    },
-    {
-      "title": "&quot;사망 원인 밝히라&quot;는 유족, &quot;배상만 하겠다&quot;는 회사",
-      "url": "https://www.labortoday.co.kr/news/articleView.html?idxno=233715",
-      "summary": "다만 유족쪽 관계자는 &quot;합의에 본부장급과 부공장장, 관리팀장, 노무사만 나왔다&quot;며 &quot;대표이사가 참석해 죄송한 마음을 전달하고 대책을 가져오거나 의견을 공유하는 등 모습을 보여야 하는데, 대표이사 두 명 모두 참석을... ",
-      "published_at": "2026-04-09T22:04:00+00:00",
-      "source": "매일노동뉴스",
-      "category": "노무사"
     }
   ],
   "keyword_trend": [
     {
       "keyword": "해고",
-      "count": 659661
+      "count": 659711
     },
     {
       "keyword": "최저임금",
-      "count": 595502
+      "count": 595545
     },
     {
       "keyword": "퇴직금",
-      "count": 253483
+      "count": 253503
     },
     {
       "keyword": "4대보험",
-      "count": 229505
+      "count": 229513
     },
     {
       "keyword": "근로기준법",
-      "count": 222938
+      "count": 222973
     },
     {
       "keyword": "주52시간",
-      "count": 132437
+      "count": 132440
     },
     {
       "keyword": "노동법",
-      "count": 100250
+      "count": 100255
     },
     {
       "keyword": "노무사",
-      "count": 98283
+      "count": 98322
     },
     {
       "keyword": "인사노무",
-      "count": 82751
+      "count": 82760
     },
     {
       "keyword": "연차휴가",
-      "count": 80907
+      "count": 80912
     }
   ],
   "summary": {
-    "total_regular": 0,
-    "total_shorts": 0,
+    "total_regular": 5,
+    "total_shorts": 5,
     "total_news_articles": 10,
     "search_keywords": [
       "인사노무",
