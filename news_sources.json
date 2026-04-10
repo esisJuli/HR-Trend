@@ -1,0 +1,19 @@
+{
+  "rss_feeds": [
+    {
+      "name": "매일노동뉴스",
+      "url": "http://www.labortoday.co.kr/rss/allArticle.xml",
+      "category": "노동뉴스"
+    },
+    {
+      "name": "법률신문",
+      "url": "https://www.lawtimes.co.kr/rss/news.xml",
+      "category": "법률"
+    },
+    {
+      "name": "노동법률",
+      "url": "https://www.worklaw.co.kr/rss/rss.xml",
+      "category": "노무실무"
+    }
+  ]
+}
