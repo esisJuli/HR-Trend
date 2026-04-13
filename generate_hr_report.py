@@ -177,6 +177,10 @@ def main():
     html_path = OUTPUT_REPORT_DIR / f"hr-report-{date_str}.html"
     html_path.write_text(html, encoding="utf-8")
     print(f"완료! → {html_path}")
+
+    latest_path = OUTPUT_REPORT_DIR / "latest.html"
+    latest_path.write_text(html, encoding="utf-8")
+    print(f"고정 URL 업데이트 → {latest_path}")
     return str(html_path)
 
 
