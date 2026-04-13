@@ -105,14 +105,14 @@ def make_video_card(v: dict, rank: int) -> str:
 
 
 def build_video_grid_html(regular: list, shorts: list) -> str:
-    """일반/쇼츠를 한 그리드에 행 단위로 나란히 배치 — 높이 자동 동일"""
-    max_len = max(len(regular), len(shorts), 1)
-    rows = []
-    for i in range(max_len):
-        left = make_video_card(regular[i], i + 1) if i < len(regular) else "<div class='video-card empty'></div>"
-        right = make_video_card(shorts[i], i + 1) if i < len(shorts) else "<div class='video-card empty'></div>"
-        rows.append(f"{left}\n{right}")
-    return "\n".join(rows)
+    """일반/쇼츠를 탭으로 분리하여 표시"""
+    empty_msg = "<p style='color:#aaa; text-align:center; padding:20px;'>수집된 영상이 없습니다</p>"
+    regular_html = "\n".join(make_video_card(v, i + 1) for i, v in enumerate(regular)) if regular else empty_msg
+    shorts_html = "\n".join(make_video_card(v, i + 1) for i, v in enumerate(shorts)) if shorts else empty_msg
+    return (
+        f'<div class="tab-content active" id="tab-regular">\n{regular_html}\n</div>\n'
+        f'<div class="tab-content" id="tab-shorts">\n{shorts_html}\n</div>'
+    )
 
 
 def build_news_html(data: dict) -> str:
