@@ -2,6 +2,9 @@
 .env
 .env.*
 
+# 리포트 결과물 — GitHub Actions가 전담
+output/
+
 # Python
 __pycache__/
 *.py[cod]
