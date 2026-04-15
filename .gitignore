@@ -2,8 +2,8 @@
 .env
 .env.*
 
-# 리포트 결과물 — GitHub Actions가 전담
-output/
+# 수집 원본 데이터 — 용량 크고 매일 갱신되므로 제외
+output/data/
 
 # Python
 __pycache__/
