@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Trend Report | KM</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; background: #fdf6f0; color: #2d3748; }
+  .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+  /* 헤더 */
+  .report-header {
+    background: linear-gradient(135deg, #7b2d00 0%, #dd6b20 100%);
+    color: white; padding: 40px; border-radius: 16px; margin-bottom: 24px; text-align: center;
+  }
+  .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 12px; }
+  .report-header h1 { font-size: 28px; margin-bottom: 8px; }
+  .report-header .subtitle { font-size: 14px; opacity: 0.85; }
+  .stat-row { display: flex; justify-content: center; gap: 48px; margin-top: 24px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; }
+  .stat-label { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+
+  /* 섹션 */
+  .section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section-title { font-size: 18px; font-weight: 700; color: #7b2d00; margin-bottom: 6px; padding-bottom: 12px; border-bottom: 2px solid #fed7aa; }
+  .section-desc { font-size: 13px; color: #718096; margin-bottom: 16px; }
+
+  /* 탭 */
+  .tab-buttons { display: flex; border-radius: 10px; overflow: hidden; border: 1px solid #fed7aa; margin-bottom: 16px; }
+  .tab-btn { flex: 1; padding: 10px 0; font-size: 14px; font-weight: 700; border: none; cursor: pointer; background: #fff7ed; color: #c05621; transition: background 0.2s, color 0.2s; font-family: inherit; }
+  .tab-btn + .tab-btn { border-left: 1px solid #fed7aa; }
+  .tab-btn.active { background: #dd6b20; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .tab-content .video-card { margin-bottom: 12px; }
+  .tab-content .video-card:last-child { margin-bottom: 0; }
+
+  /* 영상 카드 */
+  .video-card { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid #fed7aa; border-radius: 10px; }
+  .video-card.empty { border: 1px dashed #fed7aa; background: #fffaf7; }
+  .video-rank { width: 32px; height: 32px; border-radius: 50%; background: #fed7aa; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 2px; color: #7b2d00; }
+  .video-rank.top1 { background: #f6e05e; color: #744210; }
+  .video-rank.top2 { background: #cbd5e0; color: #2d3748; }
+  .video-rank.top3 { background: #fbd38d; color: #7b341e; }
+  .video-info { flex: 1; }
+  .video-channel { font-size: 11px; color: #718096; margin-bottom: 3px; }
+  .video-title { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 5px; }
+  .video-title a { color: inherit; text-decoration: none; }
+  .video-title a:hover { color: #dd6b20; }
+  .video-stats { display: flex; gap: 8px; font-size: 11px; color: #a0aec0; flex-wrap: wrap; }
+
+  /* 키워드 태그 */
+  .kw-tag { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 13px; margin: 4px; background: #fed7aa; color: #7b2d00; }
+  .kw-tag.hot { background: #fff7ed; color: #c05621; font-weight: 600; border: 1px solid #fed7aa; }
+
+  /* 키워드 트렌드 바 */
+  /* 트렌드 2컬럼 */
+  .trend-columns { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+  .trend-right { display: flex; flex-direction: row; align-items: center; gap: 16px; width: 100%; min-height: 300px; }
+
+  .trend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .trend-label { width: 80px; font-size: 13px; font-weight: 600; color: #2d3748; text-align: right; flex-shrink: 0; }
+  .trend-bar-wrap { flex: 1; background: #fdf6f0; border-radius: 6px; height: 22px; display: flex; align-items: center; }
+  .trend-bar { height: 22px; background: linear-gradient(90deg, #c05621, #f6ad55); border-radius: 6px; min-width: 4px; }
+  .trend-count { width: 50px; font-size: 12px; color: #718096; text-align: right; flex-shrink: 0; }
+
+  /* 파이 레전드 */
+  #pie-legend { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+  .pie-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4a5568; margin-bottom: 7px; }
+  .pie-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+  /* 뉴스 카드 */
+  .news-card { border: 1px solid #fed7aa; border-radius: 10px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
+  .news-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(221,107,32,0.18); border-color: #f6ad55; }
+  .news-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .news-category { background: #fff7ed; color: #c05621; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; border: 1px solid #fed7aa; }
+  .news-source { font-size: 12px; color: #718096; }
+  .news-date { font-size: 12px; color: #a0aec0; margin-left: auto; }
+  .news-title { font-size: 15px; font-weight: 600; line-height: 1.5; margin-bottom: 6px; }
+  .news-summary { font-size: 13px; color: #718096; line-height: 1.6; }
+
+  .footer { text-align: center; padding: 20px; color: #a0aec0; font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 10px; }
+    .report-header { padding: 24px 16px; }
+    .report-header h1 { font-size: 20px; }
+    .stat-row { gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .section { padding: 16px 12px; }
+    .section-title { font-size: 15px; }
+
+    /* 트렌드 바차트 */
+    .trend-columns { grid-template-columns: 1fr; gap: 20px; }
+    .trend-label { width: 60px; font-size: 12px; }
+    .trend-count { width: 40px; font-size: 11px; }
+
+    /* 파이차트 */
+    .trend-right { flex-direction: column; align-items: center; min-height: auto; gap: 12px; }
+    .trend-right > div:first-child { width: 100%; display: flex; flex-direction: column; align-items: center; }
+    canvas { width: 220px !important; height: 220px !important; display: block; margin: 0 auto; }
+    #pie-legend { flex-direction: row; flex-wrap: wrap; justify-content: center; height: auto; gap: 4px; }
+    .pie-legend-item { margin-right: 6px; font-size: 11px; }
+
+    /* 뉴스 */
+    .news-date { margin-left: 0; }
+    .news-title { font-size: 14px; }
+    .news-summary { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="report-header">
+    <div class="badge">2026 HR Trend Report</div>
+    <h1>HR 인사노무 트렌드 리포트</h1>
+    <div class="subtitle">2026-10-19 기준 | 매일 오전 9시 자동생성</div>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">일반 영상</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">쇼츠</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">수집 뉴스</div>
+      </div>
+    </div>
+    <div style="text-align:right; margin-top:16px; font-size:12px; opacity:0.75;">KBS미디어 인사노무팀</div>
+  </div>
+
+  <!-- 이번주 HR 트렌드 -->
+  <div class="section">
+    <div class="section-title">📊 이번주 HR 트렌드</div>
+    <div style="font-size:13px; color:#718096; margin-bottom:16px;">네이버 뉴스 기준 - 키워드별 이번주 기사 수</div>
+    <div class="trend-columns">
+      <div class="trend-left">
+        
+        <div class="trend-row">
+          <span class="trend-label">해고</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:220px;"></div>
+          </div>
+          <span class="trend-count">678k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">최저임금</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:197px;"></div>
+          </div>
+          <span class="trend-count">609k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">퇴직금</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:85px;"></div>
+          </div>
+          <span class="trend-count">262k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">4대보험</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:77px;"></div>
+          </div>
+          <span class="trend-count">237k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">근로기준법</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:75px;"></div>
+          </div>
+          <span class="trend-count">231k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">주52시간</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:44px;"></div>
+          </div>
+          <span class="trend-count">135k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">노동법</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:33px;"></div>
+          </div>
+          <span class="trend-count">104k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">노무사</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:33px;"></div>
+          </div>
+          <span class="trend-count">103k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">인사노무</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:28px;"></div>
+          </div>
+          <span class="trend-count">86k</span>
+        </div>
+
+        <div class="trend-row">
+          <span class="trend-label">연차휴가</span>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar" style="width:27px;"></div>
+          </div>
+          <span class="trend-count">84k</span>
+        </div>
+      </div>
+      <div class="trend-right">
+        <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+          <div style="font-size:13px; font-weight:600; color:#7b2d00; margin-bottom:8px; text-align:center;">키워드별 뉴스 비중</div>
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div id="pie-legend" style="flex:1;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인기 영상 2컬럼 -->
+  <div class="section">
+    <div class="section-title"><svg style="width:22px;height:22px;vertical-align:middle;margin-right:6px;margin-bottom:2px;" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.55 3.5 12 3.5 12 3.5s-7.55 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.45 20.5 12 20.5 12 20.5s7.55 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>이번주 HR 유튜브 영상 TOP 5</div>
+    <div class="section-desc">유튜브 영상 기준 - 조회수 및 좋아요 트렌드 분석</div>
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab-regular')">📹 일반</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-shorts')">⚡ 쇼츠</button>
+    </div>
+    <div class="tab-content active" id="tab-regular">
+<div class="video-card">
+          <div class="video-rank top1">1</div>
+          <div class="video-info">
+            <div class="video-channel">KBS News</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=ABjkCrSgaTw" target="_blank">가짜 경력? 최악 브리핑?…트럼프 ‘새 입’, 최단기간 해고되나 [W 언박싱] / KBS 2026.10.14.</a></div>
+            <div class="video-stats">
+              <span>👁 276,930</span>
+              <span>👍 762</span>
+              <span>⏱ 3분 48초</span>
+              <span>📅 2026-10-14</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank top2">2</div>
+          <div class="video-info">
+            <div class="video-channel">전주MBC News</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=0SlBmVShyJE" target="_blank">"제보가 하나 들어왔습니다" '깜짝' 녹음 파일 공개되자 국정감사장 '화들짝'</a></div>
+            <div class="video-stats">
+              <span>👁 33,463</span>
+              <span>👍 416</span>
+              <span>⏱ 22분 41초</span>
+              <span>📅 2026-10-16</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank top3">3</div>
+          <div class="video-info">
+            <div class="video-channel">KNN NEWS</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=W2TR9514r04" target="_blank">한 회사서 퇴사·재입사만 10번? 실업급여로 1억 챙긴 황당 사례 / KNN</a></div>
+            <div class="video-stats">
+              <span>👁 35,697</span>
+              <span>👍 59</span>
+              <span>⏱ 3분 33초</span>
+              <span>📅 2026-10-17</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank ">4</div>
+          <div class="video-info">
+            <div class="video-channel">KBS 다큐</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=PbcFMwi7ccM" target="_blank">왜 10년 동안 일해도 최저임금일까? 반복되는 갈등 속에서 상생의 해법은 없는 것인가 | KBS 시사기획 창 20161025 방송</a></div>
+            <div class="video-stats">
+              <span>👁 17,500</span>
+              <span>👍 29</span>
+              <span>⏱ 51분 33초</span>
+              <span>📅 2026-10-16</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank ">5</div>
+          <div class="video-info">
+            <div class="video-channel">KBS 다큐</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=spM0eJ3HGi0" target="_blank">증거가 부족하다며 산재를 거부... 아픈 노동자가 직접 증거가 되어야 하는 현실 | KBS 취재파일 4321 20110710 방송</a></div>
+            <div class="video-stats">
+              <span>👁 15,701</span>
+              <span>👍 58</span>
+              <span>⏱ 13분 56초</span>
+              <span>📅 2026-10-14</span>
+            </div>
+          </div>
+        </div>
+</div>
+<div class="tab-content" id="tab-shorts">
+<div class="video-card">
+          <div class="video-rank top1">1</div>
+          <div class="video-info">
+            <div class="video-channel">더짧은뉴스</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=Uw1Sg9H0Bd8" target="_blank">삼성반도체 정규직과 비정규직 차이 #뉴스 #짧은뉴스</a></div>
+            <div class="video-stats">
+              <span>👁 82,019</span>
+              <span>👍 400</span>
+              <span>⏱ 45초</span>
+              <span>📅 2026-10-18</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank top2">2</div>
+          <div class="video-info">
+            <div class="video-channel">SBS 뉴스</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=NimfaQ4ndq4" target="_blank">'주 52시간제' 부정적 영향?..제조업·중소 사업체 '타격' / 경제365 / SBS 10시뉴스</a></div>
+            <div class="video-stats">
+              <span>👁 9,575</span>
+              <span>👍 7</span>
+              <span>⏱ 44초</span>
+              <span>📅 2026-10-14</span>
+            </div>
+          </div>
+        </div>
+<div class="video-card">
+          <div class="video-rank top3">3</div>
+          <div class="video-info">
+            <div class="video-channel">1350 고용노동부 고객상담센터</div>
+            <div class="video-title"><a href="https://www.youtube.com/watch?v=Xx9eaktMRTA" target="_blank">퇴사 전 3초만 확인하세요, 실업급여 기간 #실업급여 #실업급여수급조건 #실업급여기간 #실업급여신청방법 #구직급여 #소정급여일수 #실업급여받는법 #고용보험 #고용24</a></div>
+            <div class="video-stats">
+              <span>👁 3,667</span>
+              <span>👍 18</span>
+              <span>⏱ 30초</span>
+              <span>📅 2026-10-14</span>
+            </div>
+          </div>
+        </div>
+</div>
+  </div>
+
+  <!-- 주요 뉴스 -->
+  <div class="section">
+    <div class="section-title">📰 이번주 HR 주요 뉴스 (최대 10건)</div>
+    
+        <a href="http://www.worklaw.co.kr/view/view.asp?accessSite=Naver&accessMethod=Search&accessMenu=News&in_cate=106&in_cate2=0&gopage=1&bi_pidx=39632" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">근로기준법</span>
+              <span class="news-source">노동법률</span>
+              <span class="news-date">2026-10-19</span>
+            </div>
+            <div class="news-title">개정 형사소송법과 노동감독관 수사 : 주요 변화와 실무상 쟁점</div>
+            <div class="news-summary">또한 근로기준법은 2026. 10. 현재 근로감독관 체계로서 감독기관, 권한, 수사의 전담 등을 정하고 있으나, 새로 제정된 노동감독관 직무집행법이 2026. 12. 8. 시행되면서 근로감독관 명칭이 '노동감독관'으로 변경되고 그... </div>
+          </div>
+        </a>
+
+        <a href="http://www.worklaw.co.kr/view/view.asp?accessSite=Naver&accessMethod=Search&accessMenu=News&in_cate=124&in_cate2=0&gopage=1&bi_pidx=39635" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">근로기준법</span>
+              <span class="news-source">노동법률</span>
+              <span class="news-date">2026-10-18</span>
+            </div>
+            <div class="news-title">원청이 하청 임금 들여다본다…임금구분지급제, ‘원청 사용자성’ 불씨...</div>
+            <div class="news-summary">원청에 '지급 확인' 의무, 민간 '건설ㆍ조선'으로 확대 고용노동부는 지난 8월 임금구분지급제 적용 대상과 지급 절차를 담은 근로기준법 시행령ㆍ시행규칙 개정안을 입법예고했다. 지난해 9월 범정부 합동으로 발표한... </div>
+          </div>
+        </a>
+
+        <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=237262" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">노동법</span>
+              <span class="news-source">매일노동뉴스</span>
+              <span class="news-date">2026-10-18</span>
+            </div>
+            <div class="news-title">[2026년 노동국감] 옵티칼도 태웅도 불출석, '맹탕' 오명 벗을까</div>
+            <div class="news-summary">&quot;노동청에서 통역을 '이주노동자가 알아와라'고 하면 말이 안 된다&quot;는 이학영 민주당 의원의 지적에 손필훈 노동부 기획조정실장은 &quot;외국인 노동자 상대 인공지능(AI) 노동법 상담 서비스를 제공하고 있는데, 추가로 실제... </div>
+          </div>
+        </a>
+
+        <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=237274" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">근로기준법</span>
+              <span class="news-source">매일노동뉴스</span>
+              <span class="news-date">2026-10-18</span>
+            </div>
+            <div class="news-title">정년연장형 임금피크제는 다 합법인가요</div>
+            <div class="news-summary">고령자고용법과 근로기준법 등을 위반해 무효라고 주장했습니다. 이에 대해 피고인 회사측은 고령자고용법 4조의5 4호(특정 연령집단의 고용유지·촉진을 위한 지원조치를 하는 경우)에 해당하는 예외적 사유로서 법률이... </div>
+          </div>
+        </a>
+
+        <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=237265" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">해고</span>
+              <span class="news-source">매일노동뉴스</span>
+              <span class="news-date">2026-10-18</span>
+            </div>
+            <div class="news-title">[여성노동자의 펼침막] &quot;불평등과 모욕 너머, 부르지 못한 여성노동 이...</div>
+            <div class="news-summary">회사와 반대파 조합원들의 노골적인 활동 방해와 괴롭힘 속에서 안순애를 비롯한 여성노동자들은 저항하고 해고된다. 영화 &lt;카트&gt;로 잘 알려진 '이랜드 홈에버 투쟁'의 열혈 연대자이자 비정규 노동운동을 했던 빨간거북... </div>
+          </div>
+        </a>
+
+        <a href="https://www.labortoday.co.kr/news/articleView.html?idxno=237264" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+          <div class="news-card">
+            <div class="news-meta">
+              <span class="news-category">노무사</span>
+              <span class="news-source">매일노동뉴스</span>
+              <span class="news-date">2026-10-18</span>
+            </div>
+            <div class="news-title">&quot;죽어야 끝나나요&quot; 문화예술위 직원들 '고통'</div>
+            <div class="news-summary">민현기 공인노무사(공공운수노조 법률원)는 &quot;자료 제출 요구 권한이 있더라도 업무상 적정범위 안에서 이뤄져야 한다&quot;며 &quot;요청한 자료의 내용, 위원과 직원 사이의 관계, 직원들의 정신적 고통 호소를 종합적으로... </div>
+          </div>
+        </a>
+  </div>
+
+  <div class="footer">
+    자동 생성: 2026-10-19 02:48 | HR 인사노무 트렌드 리포트
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+  const pieData = {"labels": ["해고", "최저임금", "퇴직금", "4대보험", "근로기준법", "주52시간", "노동법", "노무사", "인사노무", "연차휴가"], "values": [678065, 609047, 262724, 237364, 231562, 135779, 104137, 103176, 86649, 84091], "total": 2532594};
+  const colors = [
+    "#c05621","#dd6b20","#ed8936","#f6ad55","#fbd38d",
+    "#7b2d00","#e53e3e","#d69e2e","#38a169","#3182ce"
+  ];
+  // 컨테이너 높이 기준으로 차트 크기 결정
+  const trendRight = document.querySelector('.trend-right');
+  const chartSize = Math.min(trendRight.offsetHeight || 300, 300);
+  const canvas = document.getElementById('pieChart');
+  canvas.width = chartSize;
+  canvas.height = chartSize;
+
+  const ctx = canvas.getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: pieData.labels,
+      datasets: [{
+        data: pieData.values,
+        backgroundColor: colors.slice(0, pieData.labels.length),
+        borderWidth: 2,
+        borderColor: '#fff',
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ` ${ctx.label}: ${ctx.parsed.toLocaleString()}건 (${((ctx.parsed / pieData.total) * 100).toFixed(1)}%)`
+          }
+        }
+      }
+    }
+  });
+
+  // 레전드 직접 생성 (차트 오른쪽에 세로 배치)
+  const legend = document.getElementById('pie-legend');
+  legend.style.display = 'flex';
+  legend.style.flexDirection = 'column';
+  legend.style.justifyContent = 'center';
+  pieData.labels.forEach((label, i) => {
+    const pct = ((pieData.values[i] / pieData.total) * 100).toFixed(1);
+    const item = document.createElement('div');
+    item.className = 'pie-legend-item';
+    item.innerHTML = `<div class="pie-legend-dot" style="background:${colors[i]}"></div><span>${label} ${pct}%</span>`;
+    legend.appendChild(item);
+  });
+
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+</body>
+</html>
